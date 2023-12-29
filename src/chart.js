@@ -31,6 +31,7 @@ export const Chart = () => {
       const y = e.pageY;
       const walkX = (x - startX) * 2;
       const walkY = (y - startY) * 2;
+
       containerRef.current.scrollLeft = scrollLeft - walkX;
       containerRef.current.scrollTop = scrollTop - walkY;
     };
