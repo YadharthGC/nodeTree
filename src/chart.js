@@ -1,19 +1,10 @@
-import react, { useState, useEffect, useRef } from "react";
-import {
-  demoArr,
-  demoFunction,
-  temArr,
-  newFun,
-  need,
-  up,
-} from "./employeeDetails";
-import "./App.css";
-import { TreeView } from "@mui/x-tree-view";
-import upimg from "./upicon.jpg";
+import { useState, useEffect, useRef } from "react";
+import { handleKeyChild } from "./employeeDetails";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import "./App.css";
 
 export const Chart = () => {
-  const [employeArr, setEmployeAr] = useState(up);
+  const [employeArr, setEmployeAr] = useState(handleKeyChild());
   const containerRef = useRef(null);
   const [isGrabbing, setIsGrabbing] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -56,69 +47,41 @@ export const Chart = () => {
   }, [isGrabbing, startX, startY, scrollLeft, scrollTop]);
 
   const treeRendering = (treeData) => {
-    // console.log(treeData);
     return (
-      <>
-        <ul>
-          {treeData.map((item) => (
-            <li className={item.name}>
-              <div className="liDiv">
-                <div className="headerBlank">
-                  {/* <img src={upimg} /> */}
-                  <AccountCircleIcon id="usericon" />
-                </div>
-                <div className="name">{item.name}</div>
-                <div className="role">({item.designation})</div>
+      <ul>
+        {treeData.map((ele) => (
+          <li>
+            <div className="liDiv">
+              <div>
+                <AccountCircleIcon id="userIcon" />
               </div>
-              {item.children && item.children.length
-                ? treeRendering(item.children)
-                : ""}
-            </li>
-          ))}
-        </ul>
-      </>
+              <div className="employeName">{ele.name}</div>
+              <div className="employeRole">({ele.designation})</div>
+            </div>
+            {ele.children && ele.children.length
+              ? treeRendering(ele.children)
+              : ""}
+          </li>
+        ))}
+      </ul>
     );
   };
 
   return (
-    <div
-      ref={containerRef}
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100vw",
-        height: "100vh",
-        overflowX: "hidden", // Hide the scrollbar
-        whiteSpace: "nowrap",
-        border: "1px solid #ccc",
-        cursor: isGrabbing ? "grabbing" : "grab",
-        //pointerEvents: "none",
-      }}
-    >
+    <div className="organizationalChart" ref={containerRef}>
       <div className="tree">
-        <ul
-          style={
-            {
-              // width: "600px",
-              // height: "400px",
-              // background: "#f0f0f0",
-              // marginTop: `${scrollPosition}px`,
-            }
-          }
-        >
-          {employeArr.map((item) => (
-            <li className={item.name}>
+        <ul>
+          {employeArr.map((ele) => (
+            <li>
               <div className="liDiv">
-                <div className="headerBlank">
-                  {/* <img src={upimg} /> */}
-                  <AccountCircleIcon id="usericon" />
+                <div>
+                  <AccountCircleIcon id="userIcon" />
                 </div>
-                <div className="name">{item.name}</div>
-                <div className="role">({item.designation})</div>
+                <div className="employeName">{ele.name}</div>
+                <div className="employeRole">({ele.designation})</div>
               </div>
-              {item.children && item.children.length
-                ? treeRendering(item.children)
+              {ele.children && ele.children.length
+                ? treeRendering(ele.children)
                 : ""}
             </li>
           ))}
