@@ -1,0 +1,106 @@
+// import react, { useState } from "react";
+// import { demoArr, demoFunction, temArr } from "./employeeDetails";
+// import "./App.css";
+// import { TreeItem, TreeView } from "@mui/x-tree-view";
+
+// export const Chart = () => {
+//   const [employeArr, setEmployeAr] = useState(temArr);
+//   // const treeRendering = (treeData) => {
+//   //   console.log(treeData);
+//   //   return (
+//   //     <>
+//   //       <ul>
+//   //         {treeData.map((item) => (
+//   //           <li className={item.name}>
+//   //             <div>{item.name}</div>
+//   //             {item.children && item.children.length
+//   //               ? treeRendering(item.children)
+//   //               : ""}
+//   //           </li>
+//   //         ))}
+//   //       </ul>
+//   //     </>
+//   //   );
+//   // };
+
+//   const renderTree = (nodes) => {
+//     console.log(nodes, "NODESSSZSZS");
+//     return (
+//       <TreeItem key={Math.random()} nodeId={3} label={nodes.name}>
+//         {Array.isArray(nodes.children)
+//           ? nodes.children.map((node) => renderTree(node))
+//           : null}
+//       </TreeItem>
+//     );
+//   };
+
+//   return (
+//     // <div>
+//     //   {console.log(employeArr)}
+//     //   <TreeView
+//     //     aria-label="rich object"
+//     //     //defaultCollapseIcon={<ExpandMoreIcon />}
+//     //     defaultExpanded={["root"]}
+//     //     // defaultExpandIcon={<ChevronRightIcon />}
+//     //   >
+//     //     {renderTree(employeArr)}
+//     //   </TreeView>
+//     //   {/* <ul>
+//     //     {employeArr.map((item) => (
+//     //       <li className={item.name}>
+//     //         <div>{item.name}</div>
+//     //         {item.children && item.children.length
+//     //           ? treeRendering(item.children)
+//     //           : ""}
+//     //       </li>
+//     //     ))}
+//     //   </ul> */}
+//     // </div>
+//     <TreeView
+//       defaultCollapseIcon={<span>-</span>}
+//       defaultExpandIcon={<span>+</span>}
+//       defaultEndIcon={<span> </span>}
+//     >
+//       {organizationHierarchy.map(renderTree)}
+//     </TreeView>
+//   );
+// };
+
+import React from "react";
+import { TreeView, TreeItem } from "@mui/x-tree-view";
+import { temArr } from "./employeeDetails";
+import { Typography } from "@mui/material";
+
+const employees = temArr;
+
+function renderTree(node) {
+  return (
+    <TreeItem
+      key={node.name}
+      nodeId={node.name}
+      label={
+        <Typography variant="body2" sx={{ fontSize: "12px" }}>
+          <strong>{node.name}</strong> - {node.designation}
+        </Typography>
+      }
+    >
+      {Array.isArray(node.children) ? node.children.map(renderTree) : null}
+    </TreeItem>
+  );
+}
+
+function OrganizationTree() {
+  const organizationHierarchy = employees;
+
+  return (
+    <TreeView
+      defaultCollapseIcon={<span>-</span>}
+      // defaultExpandIcon={<span>+</span>}
+      // defaultEndIcon={<span> </span>}
+    >
+      {organizationHierarchy.map(renderTree)}
+    </TreeView>
+  );
+}
+
+export default OrganizationTree;
